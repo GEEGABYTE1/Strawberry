@@ -1,6 +1,4 @@
-
-
-from email.utils import formatdate
+import random
 
 from bs4 import ResultSet
 
@@ -26,6 +24,9 @@ class Schoning:
         self.bit_form = resulting_bits
         fetched_results = self.fetch_numbers(self.total_string)
         print(fetched_results)
+        print('\n')
+        print('Goals: ')
+        goals = self.goal(fetched_results, resulted_string)
 
 
     def get_string(self, bits, clauses):
@@ -78,6 +79,34 @@ class Schoning:
                     continue 
 
         return lst_of_inputs
+
+    def goal(self, lst_of_inputs, resulted_string):
+        params = {}
+        length = len(resulted_string[0])
+        counter = 0 
+        for input_num in lst_of_inputs:
+            if counter >= length:
+                break 
+            else:
+                print('ON or OFF for desired Result ')
+                input_num = int(input_num)
+                vals = list(params.keys())
+                if input_num not in vals:
+                    state = random.randint(1, 2)
+                    if state == 1:
+                        string = False 
+                    else:
+                        string = True 
+                    
+                    params[input_num] = string 
+    
+            counter += 1
+
+    
+        return params
+        
+
+
 
 
 
