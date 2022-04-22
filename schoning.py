@@ -2,8 +2,13 @@
 
 from email.utils import formatdate
 
+from bs4 import ResultSet
+
 
 class Schoning:
+
+    total_string = None     # Input and 
+    bit_form = None         # Bits are Parallel
 
     def get_input(self):
         self.num_bits = int(input('Number of Bits: '))
@@ -14,7 +19,11 @@ class Schoning:
     def experiment(self):
         result = self.get_input()
         resulted_string = self.get_string(self.num_bits, self.num_clauses)
+        self.total_string = resulted_string
         print(resulted_string)
+        resulting_bits = self.string_to_bit(resulted_string)
+        print(resulting_bits)
+        self.bit_form = resulting_bits
 
 
     def get_string(self, bits, clauses):
@@ -39,6 +48,22 @@ class Schoning:
             
         
         return strings 
+
+    
+    def string_to_bit(self, strings):
+        bits = []
+        for lst in strings:
+            binary_num = []
+            for number in lst:
+                number = int(number)
+                if number < 0:
+                    binary_num.append(1)
+                else:
+                    binary_num.append(0)
+            
+            bits.append(0)
+    
+        return bits
 
 
 test = Schoning()
