@@ -82,12 +82,34 @@ class Schoning:
             for dictionary in lst:
                 for number in list(dictionary.keys()):
                     number = int(number)
-                    if not number in lst_of_inputs:
-                        lst_of_inputs.append(number)
-                    else:
-                        continue 
+                    lst_of_inputs.append(number)
+
+        new_lst = []
+        length = len(self.initial_string[0])
+        random_idx = []
+        for i in range(length):
+            idx = random.randint(0, length - 1)
+            random_idx.append(idx)
+    
+        for input_idx in range(len(lst_of_inputs)):
+            for idx in random_idx:
+                if idx == input_idx:
+                    new_lst.append(lst_of_inputs[input_idx])
+                else:
+                    continue 
+        
+        lst_of_inputs = new_lst          
         
         return lst_of_inputs
+
+    
+    def goal(self, lst_of_inputs):
+        params = {}
+        length = len(self.initial_string[0])
+        counter = 0 
+        for input_num in lst_of_inputs:
+            pass 
+
             
 
 test = Schoning()
