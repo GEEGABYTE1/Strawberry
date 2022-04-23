@@ -30,6 +30,10 @@ class Schoning:
         print('Goal Parameter: ')
         goal = self.goal(fetched_inputs)
         print(goal)
+        print('\n')
+        print('Solution: ')
+        solution = self.solution(resulted_string, goal)
+        print(solution)
 
 
 
@@ -138,25 +142,42 @@ class Schoning:
         counter = 0 
         for string in lst_of_inputs:
             for dictionary in string:
-                for goal_bit in goal:
-                    goal_bit_one = goal[0]
+                    boolean_trues = []
                     for relative_name, relative_string in dictionary.items():
-                        goal_bit_one_name = list(goal_bit_one.keys())[0]
-                        goal_bit_one_state = list(goal_bit_one.values())[0]
+                        for goal_bit in goal:
+                            goal_bit_one = goal_bit
+                            goal_bit_one_name = str(list(goal_bit_one.keys())[0])
+                            goal_bit_one_state = str(list(goal_bit_one.values())[0])
 
-                        if relative_name == goal_bit_one_name and goal_bit_one_state == relative_string:
-                            solution_indicies.append(counter)
-                        elif relative_name == goal_bit_one_name and goal_bit_one_state != relative_string:
-                            print('Updating {relative} to {desired}'.format(relative=relative_string, desired=goal_bit_one_state))
-                            lst_of_inputs[counter][goal_bit_one_name] = goal_bit_one_state
-                            solution_indicies.append(counter)
-                        elif relative_name != goal_bit_one_name and goal_bit_one_state == relative_string:
-                            print('Updating {relative} to {desired}'.format(relative=relative_name, desired=goal_bit_one_name))
-                            new_dict = {goal_bit_one_name:relative_string}
-                            lst_of_inputs[counter] = new_dict 
-                            solution_indicies.append(counter)
+                            if relative_name == goal_bit_one_name and goal_bit_one_state == relative_string:
+                                boolean_trues.append(True)
+                            elif relative_name == goal_bit_one_name and goal_bit_one_state != relative_string:
+                                print('Updating {relative} to {desired}'.format(relative=relative_string, desired=goal_bit_one_state))
+                                lst_of_inputs[counter][goal_bit_one_name] = goal_bit_one_state
+                                boolean_trues.append(True)
+                            elif relative_name != goal_bit_one_name and goal_bit_one_state == relative_string:
+                                print('Updating {relative} to {desired}'.format(relative=relative_name, desired=goal_bit_one_name))
+                                new_dict = {goal_bit_one_name:relative_string}
+                                lst_of_inputs[counter] = new_dict 
+                                boolean_trues.append(True)
+                            else:
+                                continue
+                    
+                    bool_counter = 0
+                    for boolean in boolean_trues:
+                        if boolean == True:
+                            bool_counter += 1
                         else:
-                            print('None Matched')
+                            continue 
+                    
+                    if bool_counter == len(self.initial_string[0]):
+                        solution_indicies.append(counter)
+                    else:
+                        continue
+
+
+                    
+                    
             counter += 1
         
         return solution_indicies
