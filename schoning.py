@@ -23,9 +23,14 @@ class Schoning:
         resulting_bits = self.result(resulted_string)
         print(resulting_bits)
         print('\n')
+        print('Fetched Inputs: ')
         fetched_inputs = self.fetch_numbers(resulted_string)
         print(fetched_inputs)
- 
+        print('\n')
+        print('Goal Parameter: ')
+        goal = self.goal(fetched_inputs)
+        print(goal)
+
 
 
     def get_input(self):
@@ -104,11 +109,26 @@ class Schoning:
 
     
     def goal(self, lst_of_inputs):
-        params = {}
+        params = []
         length = len(self.initial_string[0])
         counter = 0 
         for input_num in lst_of_inputs:
-            pass 
+            if counter >= length:
+                break 
+            else:
+                input_num = int(input_num)
+                boolean_setter = random.randint(1, 2)
+                if boolean_setter == 1:
+                    dictionary = {input_num:True}
+                    params.append(dictionary)
+                else:
+                    dictionary = {input_num:False}
+                    params.append(dictionary)
+
+            
+            counter += 1
+
+        return params 
 
             
 
