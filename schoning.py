@@ -1,9 +1,4 @@
 import random
-from unittest import result
-
-from bs4 import ResultSet
-from matplotlib.font_manager import list_fonts
-import prompt_toolkit
 
 
 class Schoning:
@@ -11,6 +6,7 @@ class Schoning:
     total_string = None     # Input and 
     bit_form = None         # Bits are Parallel
     initial_string = None
+    goal_ref = None
 
     def experiment(self):
         self.get_input()
@@ -29,6 +25,7 @@ class Schoning:
         print('\n')
         print('Goal Parameter: ')
         goal = self.goal(fetched_inputs)
+        self.goal_ref = goal
         print(goal)
         print('\n')
         print('Solution: ')
@@ -137,12 +134,17 @@ class Schoning:
     
     def solution(self, lst_of_inputs, goal):
         solution_indicies = []
+        goal_ref = []
         #goal_bit_one = goal[0]
         #goal_bit_two = goal[-1]
         counter = 0 
         for string in lst_of_inputs:
+            boolean_trues = []
+            if counter >= 1:
+                goal = goal_ref
+                goal_ref = []
+            relative_counter = 0
             for dictionary in string:
-                    boolean_trues = []
                     for relative_name, relative_string in dictionary.items():
                         for goal_bit in goal:
                             goal_bit_one = goal_bit
@@ -151,34 +153,41 @@ class Schoning:
 
                             if relative_name == goal_bit_one_name and goal_bit_one_state == relative_string:
                                 boolean_trues.append(True)
+                                break
                             elif relative_name == goal_bit_one_name and goal_bit_one_state != relative_string:
                                 print('Updating {relative} to {desired}'.format(relative=relative_string, desired=goal_bit_one_state))
-                                lst_of_inputs[counter][goal_bit_one_name] = goal_bit_one_state
+                                lst_of_inputs[counter][relative_counter][relative_name] = goal_bit_one_state
                                 boolean_trues.append(True)
+                                break
                             elif relative_name != goal_bit_one_name and goal_bit_one_state == relative_string:
                                 print('Updating {relative} to {desired}'.format(relative=relative_name, desired=goal_bit_one_name))
-                                new_dict = {goal_bit_one_name:relative_string}
-                                lst_of_inputs[counter] = new_dict 
+                                new_dict = {int(goal_bit_one_name):relative_string}
+                                lst_of_inputs[counter][relative_counter] = new_dict 
                                 boolean_trues.append(True)
+                                break
                             else:
-                                continue
-                    
-                    bool_counter = 0
-                    for boolean in boolean_trues:
-                        if boolean == True:
-                            bool_counter += 1
-                        else:
-                            continue 
-                    
-                    if bool_counter == len(self.initial_string[0]):
-                        solution_indicies.append(counter)
-                    else:
-                        continue
+                                break
+                            
+                        goal_ref.append(goal.pop(0))
+                    relative_counter += 1
+
+            counter += 1 
+            bool_counter = 0
+            for boolean in boolean_trues:
+                if boolean == True:
+                    bool_counter += 1
+                else:
+                    continue 
+            
+            if bool_counter == len(self.initial_string[0]):
+                solution_indicies.append(counter)
+            else:
+                continue
 
 
                     
                     
-            counter += 1
+            
         
         return solution_indicies
                     
