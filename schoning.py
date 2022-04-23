@@ -31,6 +31,10 @@ class Schoning:
         print('Solution: ')
         solution = self.solution(resulted_string, goal)
         print(solution)
+        print('\n')
+        print('Solution in Bits: ')
+        bit_solution = self.bin_finder(solution, resulted_string)
+        print(bit_solution)
 
 
 
@@ -190,6 +194,33 @@ class Schoning:
             
         
         return solution_indicies
+
+    
+    def bin_finder(self, sols, lst_of_inputs):
+        bit_solutions = []
+        
+        for sol_idx in sols:
+            for string_idx in range(len(lst_of_inputs)):
+                bit_string = ''
+                if string_idx == sol_idx:
+                    for dictionary in lst_of_inputs[string_idx]:
+                        for state in list(dictionary.values()):
+                            if state == 'False' or state == False:
+                                bit_string += '1'
+                            else:
+                                bit_string += '0'
+
+                    bit_solutions.append(bit_string)
+                else:
+                    continue
+
+        
+        return bit_solutions
+                    
+
+        
+        
+
                     
 
 
