@@ -130,6 +130,46 @@ class Schoning:
 
         return params 
 
+    
+    def solution(self, lst_of_inputs, goal):
+        solution_indicies = []
+        #goal_bit_one = goal[0]
+        #goal_bit_two = goal[-1]
+        counter = 0 
+        for string in lst_of_inputs:
+            for dictionary in string:
+                for goal_bit in goal:
+                    goal_bit_one = goal[0]
+                    for relative_name, relative_string in dictionary.items():
+                        goal_bit_one_name = list(goal_bit_one.keys())[0]
+                        goal_bit_one_state = list(goal_bit_one.values())[0]
+
+                        if relative_name == goal_bit_one_name and goal_bit_one_state == relative_string:
+                            solution_indicies.append(counter)
+                        elif relative_name == goal_bit_one_name and goal_bit_one_state != relative_string:
+                            print('Updating {relative} to {desired}'.format(relative=relative_string, desired=goal_bit_one_state))
+                            lst_of_inputs[counter][goal_bit_one_name] = goal_bit_one_state
+                            solution_indicies.append(counter)
+                        elif relative_name != goal_bit_one_name and goal_bit_one_state == relative_string:
+                            print('Updating {relative} to {desired}'.format(relative=relative_name, desired=goal_bit_one_name))
+                            new_dict = {goal_bit_one_name:relative_string}
+                            lst_of_inputs[counter] = new_dict 
+                            solution_indicies.append(counter)
+                        else:
+                            print('None Matched')
+            counter += 1
+        
+        return solution_indicies
+                    
+
+
+
+
+                        
+            
+
+    
+
             
 
 test = Schoning()
