@@ -1,6 +1,8 @@
 import random
+from unittest import result
 
 from bs4 import ResultSet
+from matplotlib.font_manager import list_fonts
 import prompt_toolkit
 
 
@@ -20,6 +22,10 @@ class Schoning:
         print('Resulting Bits: ')
         resulting_bits = self.result(resulted_string)
         print(resulting_bits)
+        print('\n')
+        fetched_inputs = self.fetch_numbers(resulted_string)
+        print(fetched_inputs)
+ 
 
 
     def get_input(self):
@@ -69,6 +75,19 @@ class Schoning:
             bits.append(binary_num)
         
         return bits 
+
+    def fetch_numbers(self, strings):
+        lst_of_inputs = []
+        for lst in strings:
+            for dictionary in lst:
+                for number in list(dictionary.keys()):
+                    number = int(number)
+                    if not number in lst_of_inputs:
+                        lst_of_inputs.append(number)
+                    else:
+                        continue 
+        
+        return lst_of_inputs
             
 
 test = Schoning()
