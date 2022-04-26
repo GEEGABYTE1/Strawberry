@@ -234,4 +234,4 @@ class Schoning:
             
 
 test = Schoning()
-print(test.experiment())
+# print(test.experiment())
