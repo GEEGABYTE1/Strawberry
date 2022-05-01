@@ -7,6 +7,7 @@ class Schoning:
     bit_form = None         # Bits are Parallel
     initial_string = None
     goal_ref = None
+    bit_solution = None
 
     def experiment(self):
         self.get_input()
@@ -34,7 +35,7 @@ class Schoning:
         print('\n')
         print('Solution in Bits: ')
         bit_solution = self.bin_finder(solution, resulted_string)
-        print(bit_solution)
+        return bit_solution
 
 
 
